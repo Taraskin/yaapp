@@ -21,4 +21,6 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: | 
+        mvn -B package 
+        mvn jib:build -Djib.to.image=svejkciber/${{ github.event.repository.name }}:${{ github.sha }} -Djib.to.auth.username=${{ secrets.DOCKERHUB_USER }} -Djib.to.auth.password=${{ secrets.DOCKERHUB_PASSWORD }}
